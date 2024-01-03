@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      CRUD PERSON
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,45 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">CRUD PERSON</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+  <ion-fab slot="fixed" vertical="top" horizontal="start">
+    <ion-fab-button>
+      <ion-icon name="chevron-forward-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="end">
+      <ion-fab-button>
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="removeUserAction()">
+        <ion-icon name="person-remove-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div class="cards">
+    <ion-card>
+      <ion-card-header>
+        {{ randomUser.name }}
+      </ion-card-header>
+      
+      <ion-item>
+        <ion-card-content>
+          <p>ID: {{ randomUser.id }}</p>
+          <p>Birth Date: {{ randomUser.birthDate | date: 'short' }}</p>
+          <p>Job: {{ randomUser.job }}</p>
+          <p>Tel: {{ randomUser.tel }}</p>
+          <p>Active: {{ randomUser.active === 1 ? 'Yes' : 'No' }}</p>
+        </ion-card-content>
+        <ion-thumbnail *ngIf="removeUserFlag" slot="end">
+          <ion-checkbox [value]="randomUser.id" (ionChange)="checkBoxChange($event)"></ion-checkbox>
+        </ion-thumbnail>
+      </ion-item>
+         
+
+    </ion-card>
   </div>
 </ion-content>
