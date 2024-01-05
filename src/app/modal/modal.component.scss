@@ -15,7 +15,7 @@
         {
             margin: 50% auto;
             padding: 20px;
-            width: 70%;
+            width: 100%;
             border-radius: 20px;
             background-color: rgb(187, 221, 251);
             color: #000000;
@@ -23,7 +23,24 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            gap: 10px;
             transition: all 0.2s ease;
+            .birthdate__content
+            {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                align-items: center;
+                align-content: center;
+            }
+            .button_contents
+            {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                align-items: center;
+                align-content: center;
+            }
             button 
             {
                 color: #fff;

@@ -1,7 +1,41 @@
 <div class="modal" [@fadeInOut]>
+  <form [formGroup]="userCreateForm" (ngSubmit)="onSubmit()">
   <div class="modal__main">
+      <h1>{{ title }}</h1>
       
-      <button (click)="close.emit()">close</button>
-  </div>
 
+      
+      <ion-item>
+        <ion-input formControlName="name" label="Enter FullName" labelPlacement="floating" placeholder="Enter text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="job" label="Enter position job" labelPlacement="floating" placeholder="Enter text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="tel" label="Enter mobile number" type="tel" labelPlacement="floating" placeholder="Enter text"></ion-input>
+      </ion-item>
+      <div class="birthdate__content">
+        <h4>Birthdate: </h4>
+        <ion-datetime-button datetime="dateBtn"></ion-datetime-button>
+        <ion-popover  [keepContentsMounted]="true" alignment="center" mode="ios" 
+         animated="false" >
+          <ng-template>
+            <ion-datetime 
+            formControlName="birthDate"
+            id="dateBtn"
+             preferWheel="false"
+            [showDefaultButtons]="true"
+            [cancelText]="'cancel'"
+            [doneText]="'setDate'"
+            presentation="date"></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </div>
+      <div class="button_contents">
+        <ion-button shape="round" color="success" type="submit">Submit</ion-button>
+        <ion-button shape="round" (click)="close.emit()" expand="full">Close</ion-button>
+      </div>
+    </div>
+  </form>
+  
 </div>

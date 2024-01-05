@@ -95,7 +95,7 @@ export interface User
 {
   id:number;
   name:string;
-  birthDate: Date;
+  birthDate: string;
   job:string;
   tel:string;
   active:number;

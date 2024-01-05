@@ -12,13 +12,13 @@ export class HomePage implements OnInit {
 
   users$!:Observable<User[]>;
   randomUser!: User;
-  removeUserFlag:boolean = false;
+  removeUserFlag:WritableSignal<boolean> = signal(false);
 
   userIdsForRemove: number[] = [];
   constructor(private viewContainerRef:ViewContainerRef, 
               private database: DatabaseService
     ) {
-      this.randomUser = this.generateRandomUser();
+      //this.randomUser = this.generateRandomUser();
     }
   
 
@@ -29,20 +29,12 @@ export class HomePage implements OnInit {
   }
 
 
-  ShowModal()
-  {
-    this.viewContainerRef.clear();
-    const component = this.viewContainerRef.createComponent(ModalComponent);
-
-    component.instance.title = "MY MODAL";
-    component.instance.close.subscribe(()=> this.viewContainerRef.clear());
-  }
   generateRandomUser(): User {
     
     return {
       id: Math.floor(Math.random() * 1000),
       name: 'Random Person',
-      birthDate: new Date(),
+      birthDate: new Date().toDateString(),
       job: 'Random Job',
       tel: 'Random Tel',
       active: Math.random() > 0.5 ? 1 : 0,
@@ -51,8 +43,19 @@ export class HomePage implements OnInit {
 
   removeUserAction()
   {
-    this.removeUserFlag = true;
+    this.removeUserFlag.set(true);
   }
+
+  addUserAction()
+  {
+    this.viewContainerRef.clear();
+    const component = this.viewContainerRef.createComponent(ModalComponent);
+    component.instance.title = "Add new user";
+    component.instance.updateOrCreate = true;
+   
+    component.instance.close.subscribe(()=> this.viewContainerRef.clear());
+  }
+
 
   checkBoxChange(event: any)
   {
@@ -71,6 +74,24 @@ export class HomePage implements OnInit {
       }
     }
     
+  }
+
+  removeUsers()
+  {
+    if(this.userIdsForRemove.length == 0)
+    {
+      this.removeUserFlag.set(false);
+    }
+    if(this.userIdsForRemove.length > 0)
+    {
+     for (let i = 0; i < this.userIdsForRemove.length; i++) {
+      const element = this.userIdsForRemove[i];
+      this.database.removeUser(element);
+     }
+
+
+    }
+
   }
 
 }

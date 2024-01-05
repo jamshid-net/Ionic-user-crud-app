@@ -19,7 +19,7 @@
       <ion-icon name="chevron-forward-circle"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="end">
-      <ion-fab-button>
+      <ion-fab-button (click)="addUserAction()">
         <ion-icon name="person-add-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="removeUserAction()">
@@ -27,27 +27,33 @@
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
-
+<ng-container *ngIf="users$ | async as users">
   <div class="cards">
-    <ion-card>
+    <ion-card *ngFor="let user of users">
       <ion-card-header>
-        {{ randomUser.name }}
+        {{ user.name }}
       </ion-card-header>
       
       <ion-item>
         <ion-card-content>
-          <p>ID: {{ randomUser.id }}</p>
-          <p>Birth Date: {{ randomUser.birthDate | date: 'short' }}</p>
-          <p>Job: {{ randomUser.job }}</p>
-          <p>Tel: {{ randomUser.tel }}</p>
-          <p>Active: {{ randomUser.active === 1 ? 'Yes' : 'No' }}</p>
+          <p>ID: {{ user.id }}</p>
+          <p>Birth Date: {{ user.birthDate | date: 'short' }}</p>
+          <p>Job: {{ user.job }}</p>
+          <p>Tel: {{ user.tel }}</p>
+          <p>Active: {{ user.active === 1 ? 'Yes' : 'No' }}</p>
         </ion-card-content>
-        <ion-thumbnail *ngIf="removeUserFlag" slot="end">
-          <ion-checkbox [value]="randomUser.id" (ionChange)="checkBoxChange($event)"></ion-checkbox>
+        <ion-thumbnail *ngIf="removeUserFlag()" slot="end">
+          <ion-checkbox [value]="user.id" (ionChange)="checkBoxChange($event)"></ion-checkbox>
         </ion-thumbnail>
       </ion-item>
-         
-
+        
     </ion-card>
   </div>
+</ng-container>
+  
 </ion-content>
+<ion-fab *ngIf="removeUserFlag()" slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button color="success" (click)="removeUsers()">
+    <ion-icon name="checkmark-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
